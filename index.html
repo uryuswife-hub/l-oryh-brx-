@@ -1,173 +1,202 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#190d14">
-<title>for you ^^ </title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LOVE.exe 💗</title>
 <style>
-  :root { --bg:#160d13; --card:#25141e; --white:#ffffff; --heart:#d4dbff; --cream:#fff0e8; --muted:#d9b9c5; --pink:#FFB6D9;}
-  * { box-sizing:border-box; }
- body {
-  margin: 0;
-  min-height: 100vh;
-  color: #FFB6D9;
-  font-family: system-ui, -apple-system, "Noto Sans Thai", sans-serif;
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px 14px;
-  overflow-x: hidden;
-}
-
-h1,
-.eyebrow,
-.panel h2,
-.signature {
-  color: #FFB6D9;
-}
-
-.sparkles {
-  display: none;
-}
-  main { width:min(100%,520px); position:relative; text-align:center; }
-  .eyebrow { letter-spacing:.18em; text-transform:uppercase; font-size:.72rem; color:var(--pink); }
-  h1 { font-size:clamp(1.8rem,7vw,2.7rem); margin:.5rem 0; line-height:1.25; }
-  .sub { color:var(--muted); margin:0 auto 24px; max-width:34ch; }
-  .envelope-wrap { margin:24px auto 20px; width:min(300px,82vw); height:205px; position:relative; perspective:900px; }
-  .envelope {
-    position:absolute; bottom:0; width:100%; height:150px; border-radius:8px;
-    background:linear-gradient(135deg,#f6b4c7,#d9678c); box-shadow:0 18px 45px #0007;
-  }
-  .envelope:before { content:""; position:absolute; inset:0; background:linear-gradient(35deg,transparent 49%,#f9cad7 50%) left bottom/50% 100% no-repeat,
-      linear-gradient(-35deg,transparent 49%,#e98aa7 50%) right bottom/50% 100% no-repeat; }
-  .flap { position:absolute; z-index:3; top:55px; left:0; width:100%; height:100px; transform-origin:top; transition:transform .75s ease; }
-  .flap:before { content:""; position:absolute; inset:0; background:#ffcfdb; clip-path:polygon(0 0,100% 0,50% 100%); filter:drop-shadow(0 4px 3px #8b315055); }
-  .seal { position:absolute; z-index:4; left:50%; top:116px; transform:translateX(-50%); width:44px;height:44px;border-radius:50%;
-    background:#a82f59;color:#fff0e8;display:grid;place-items:center;font-size:1.35rem;box-shadow:0 4px 12px #6a183a55; }
-  .letter {
-    position:absolute; z-index:2; left:7%; bottom:10px; width:86%; height:135px; padding:16px 12px;
-    border-radius:6px; background:#fff5f0; color:#702b47; transition:transform .8s ease, bottom .8s ease;
-    display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:0 4px 14px #0002;
-  }
-  .letter small { font-size:.76rem; }
-  .letter strong { font-family:Georgia,serif; font-size:1.5rem; margin:6px; }
-  .opened .flap { transform:rotateX(180deg); z-index:1; }
-  .opened .letter { transform:translateY(-75px); bottom:28px; }
-  .opened .seal { opacity:0; transition:opacity .2s; }
-  button, .music-label {
-    border:1px solid #f4a5bd; border-radius:999px; padding:12px 18px; color:#fff5f7;
-    background:linear-gradient(135deg,#a83b63,#71314d); font:inherit; cursor:pointer;
-    box-shadow:0 7px 20px #0003; transition:transform .15s,filter .15s;
-  }
-  button:hover { filter:brightness(1.1); } button:active { transform:scale(.98); }
-  .secondary { background:#ffffff0b; border-color:#a96a82; box-shadow:none; }
-  .panel { display:none; text-align:left; margin:22px 0 0; padding:22px; border:1px solid #a95a78;
-    border-radius:18px; background:#24131ddd; box-shadow:0 18px 45px #0003; animation:fade .5s ease; }
-  .panel.show { display:block; }
-  .panel h2 { color:var(--pink); font-size:1.2rem; margin:0 0 12px; text-align:center; }
-  .panel p { line-height:1.9; white-space:pre-line; margin:0 0 12px; }
-  .signature { text-align:right; color:var(--pink); margin-top:18px; }
-  .controls { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:14px; }
-  .music { margin:22px 0 0; padding:16px; background:#ffffff09; border:1px solid #704258; border-radius:14px; }
-  .music p { color:var(--muted); font-size:.88rem; margin:6px 0 12px; }
-  audio { width:100%; height:38px; }
-  .hint { color:#cba7b6; font-size:.78rem; line-height:1.6; margin-top:18px; }
-  @keyframes fade { from {opacity:0; transform:translateY(8px)} to {opacity:1;transform:translateY(0)} }
-  @media (prefers-reduced-motion:reduce) { *,*:before,*:after { animation:none!important; transition:none!important; } }
+*{box-sizing:border-box}
+body{margin:0;background:#fff2f7;color:#75445c;
+font-family:Arial,sans-serif;text-align:center;padding:20px 10px}
+h1{margin:8px;font-size:27px}
+p{font-size:14px}
+#game{width:min(100%,400px);margin:auto}
+canvas{width:100%;background:#ffe3ef;border:3px solid #f3a9c8;
+border-radius:15px;display:block;touch-action:none}
+button{border:0;border-radius:13px;padding:13px 18px;
+background:#f4a5c7;color:#702b4c;font-size:17px;
+font-weight:bold;margin:5px;touch-action:none}
+button:active{background:#e879ad}
+#message{font-weight:bold;min-height:42px;padding:8px}
+.controls{display:flex;justify-content:center;align-items:center}
+.small{font-size:12px;color:#a46b85}
 </style>
 </head>
 <body>
-<div class="sparkles"></div>
-<main>
-
-<div style="text-align:center; margin-bottom:18px;">
-  <iframe
-    src="https://giphy.com/embed/10N247rib4BlVC"
-    width="200"
-    height="200"
-    style="border:0; border-radius:18px;"
-    allowFullScreen>
-  </iframe>
-  <p style="color:#FFB6D9;">
-    ซารังเฮโยนะอ๊ปป๊า อ๊บ ๆ
-  </p>
+<h1>LOVE.exe 💗</h1>
+<p>ผ่านให้ครบ 4 ด่านละกัน ( ＾ω＾ ) </p>
+<div id="game">
+<canvas id="c" width="360" height="400"></canvas>
+<div id="message">พร้อมยัง? อย่าวีนก่อนน้า ฮ่า ๆ</div>
+<div class="controls">
+<button id="left">◀</button>
+<button id="jump">JUMP ↑</button>
+<button id="right">▶</button>
 </div>
-
-  <div class="eyebrow">for you</div>
-  <h1> for my oppa ᯠ ⑅ ᯄ</h1>
-  <p class="sub"> ( ＾ω＾ ) </p>
-
-  <div class="envelope-wrap" id="envelopeWrap" aria-label="ซองจดหมายสีชมพู">
-    <div class="envelope"></div>
-    <div class="letter"><small>To my favorite person</small><strong>For You ♡</strong><small>≽(˵◝ ⩊ ◜˵ マ≼</small></div>
-    <div class="flap"></div>
-    <div class="seal">♥</div>
-  </div>
-  <button id="openBtn">ദ്ദി◝ ⩊ ◜.ᐟ'</button>
-
-  <section class="panel" id="lovePanel">
-    <h2>มีบางอย่างอยากบอกเธอ</h2>
-    <p>ขอบคุณที่เข้ามาเป็นความสุขในชีวิตเค้านะ
-เธออาจไม่รู้ว่าการมีเธออยู่ทำให้วันธรรมดาของเค้ามีความหมายขึ้นแค่ไหน
-
-เค้าอาจไม่ได้พูดเก่งทุกครั้ง และบางเวลาก็คิดไม่รอบคอบจนทำให้เธอเสียใจ เค้าขอโทษจริง ๆ นะ เค้าอยากเรียนรู้ที่จะรับฟังเธอให้มากขึ้น ใส่ใจความรู้สึกของเธอ และปรับปรุงตัวเองด้วยการกระทำ ไม่ใช่แค่คำพูด
-
-เค้ารักเธอในแบบที่เธอเป็น และอยากให้ความสัมพันธ์ของเราเป็นที่ที่เราสองคนพูดความรู้สึกกันได้อย่างสบายใจ ไม่ต้องเก็บปัญหาไว้คนเดียว
-
-ขอบคุณที่ยังอ่านจดหมายนี้จนถึงตรงนี้นะ เธอสำคัญกับเค้ามากจริง ๆ ‎𖹭</p>
-    <div class="signature">รักเธอเสมอ, N‎𖹭A</div>
-  </section>
-
-  <div class="controls">
-    <button class="secondary" id="secretBtn">you can see it!</button>
-  </div>
-  <section class="panel" id="secretPanel">
-    <h2>ข้อความลับสำหรับเธอเท่านั้น ♡</h2>
-    <p>ถ้าวันไหนเธอเหนื่อย ไม่จำเป็นต้องเข้มแข็งตลอดเวลาก็ได้นะ เค้าอยากรับฟังทั้งวันที่ดีและวันที่ไม่ดีของเธอ
-
-เราไม่จำเป็นต้องสมบูรณ์แบบ แค่ค่อย ๆ เรียนรู้และดูแลกันให้ดีขึ้นก็พอแล้ว
-
-ถ้าเลือกได้อีกครั้ง เค้าก็ยังอยากมีเธออยู่ในเรื่องราวของเค้าอยู่ดี </p>
-    <div class="signature">นี่เป็นความลับของเรานะ ‎𖹭</div>
-  </section>
-
-  <div class="music">
-  <strong>🎵 Perhaps Love ♡</strong>
-  <p>เพลงที่อยากให้เธอฟัง</p>
-  <a
-    href="https://www.youtube.com/watch?v=cjaW3edHhHA"
-    target="_blank"
-    rel="noopener noreferrer"
-    style="display:inline-block;
-    padding:12px 20px;
-    border-radius:30px;
-    background:#FFB6D9;
-    color:#702B47;
-    text-decoration:none;
-    font-weight:bold;">
-    ▶ ฟังเพลง Perhaps Love
-  </a>
-  </div>
+<button id="start">เริ่มเกม / เล่นใหม่</button>
+<p class="small">เดินด้วย ◀ ▶ · กระโดดด้วย JUMP · ห้ามด่าเกมนะเพราะเค้าตั้งใจมาก</p>
+</div>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-const wrap = document.getElementById('envelopeWrap');
-const openBtn = document.getElementById('openBtn');
-const lovePanel = document.getElementById('lovePanel');
-const secretBtn = document.getElementById('secretBtn');
-const secretPanel = document.getElementById('secretPanel');
-
-openBtn.addEventListener('click', function () {
-const opened = wrap.classList.toggle('opened');
-lovePanel.classList.toggle('show', opened);
-openBtn.textContent = opened ? 'ปิดจดหมาย ♡' : 'ദ്ദി◝ ⩊ ◜.ᐟ';
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const msg=document.getElementById('message');
+const W=360,H=400;
+let level=0,dead=0,active=false,won=false,cam=0;
+let keys={left:false,right:false,jump:false};
+let p={x:25,y:300,vx:0,vy:0,w:20,h:25,ground:false};
+const levels=[
+ {name:'ด่าน 1: ก้าวแรกของฟามรัก ≽(˵◝ ⩊ ◜˵ マ≼',len:900,
+  plats:[[0,350,210],[260,350,180],[500,350,150],[710,350,190]],
+  traps:[[185,330,60],[420,330,60],[640,330,60]],fake:0},
+ {name:'ด่าน 2: รักติดไซเรน 📢',len:900,
+  plats:[[0,350,240],[290,350,170],[510,350,180],[760,350,140]],
+  traps:[[210,330,55],[380,330,50],[550,330,60],[800,330,50]],fake:1},
+ {name:'ด่าน 3: ใกล้ละ ๆ',len:950,
+  plats:[[0,350,170],[220,315,110],[390,350,120],[570,310,120],[760,350,190]],
+  traps:[[145,330,55],[300,295,45],[475,330,40],[650,290,40]],fake:2},
+ {name:'ด่าน 4: the end ✨️',len:1000,
+  plats:[[0,350,220],[270,320,100],[430,350,130],[620,310,100],[790,350,210]],
+  traps:[[195,330,55],[340,300,45],[510,330,45],[690,290,45],[850,330,55]],fake:3}
+];
+function reset(){
+ p={x:25,y:300,vx:0,vy:0,w:20,h:25,ground:false};
+ cam=0;active=true;won=false;
+ msg.textContent=levels[level].name+' — สู้ ๆ นะ 😈';
+}
+function die(){
+ if(!active)return;
+ dead++;reset();
+ msg.textContent='ตายอีก ครั้งที่ '+dead;
+}
+function next(){
+ level++;
+ if(level>=4){
+ active=false;won=true
+ msg.textContent='YOU WIN!! 💗 รางวัลของเธอคือ i luv you jupjup^^ ';
+ }else reset()
+}
+function bind(id,k){
+ let b=document.getElementById(id);
+ b.addEventListener('pointerdown',e=>{e.preventDefault();keys[k]=true});
+ for(let ev of ['pointerup','pointercancel','pointerleave'])
+ b.addEventListener(ev,e=>{keys[k]=false});
+}
+bind('left','left');bind('right','right');bind('jump','jump');
+document.getElementById('start').onclick=()=>{level=0;dead=0;reset()};
+window.addEventListener('keydown',e=>{
+ if(['ArrowLeft','ArrowRight','ArrowUp',' '].includes(e.key))e.preventDefault();
+ if(e.key==='ArrowLeft'||e.key==='a')keys.left=true;
+ if(e.key==='ArrowRight'||e.key==='d')keys.right=true;
+ if(e.key==='ArrowUp'||e.key===' ')keys.jump=true;
 });
-
-secretBtn.addEventListener('click', function () {
-secretPanel.classList.toggle('show');
+window.addEventListener('keyup',e=>{
+ if(e.key==='ArrowLeft'||e.key==='a')keys.left=false;
+ if(e.key==='ArrowRight'||e.key==='d')keys.right=false;
+ if(e.key==='ArrowUp'||e.key===' ')keys.jump=false;
 });
-});
+function draw(){
+ ctx.clearRect(0,0,W,H);
+ ctx.fillStyle='#75445c';ctx.font='bold 14px Arial';
+ ctx.fillText('LEVEL '+(level+1)+'/4',12,22);
+ ctx.fillText('💀 '+dead,290,22);
+ if(won){
+  ctx.font='bold 25px Arial';ctx.fillStyle='#d74d91';
+  ctx.fillText('YOU WIN!! 💗',75,165);
+  ctx.font='17px Arial';ctx.fillText('l oryh brx,88,205);
+  ctx.font='12px Arial';ctx.fillText('ขอบคุณที่เล่นจนจบนะ',100,235);
+  requestAnimationFrame(draw);return;
+ }
+ const L=levels[level];
+ let target=Math.max(0,Math.min(L.len-W,p.x-130));
+ cam+=(target-cam)*.12;
+ // clouds
+ ctx.fillStyle='#fff8fc';
+ for(let i=0;i<5;i++){
+  let x=((i*110-cam*.25)%420+420)%420;
+  ctx.beginPath();ctx.arc(x,70+i%2*35,17,0,7);ctx.fill();
+ }
+ // platforms
+ for(let [x,y,w] of L.plats){
+  let sx=x-cam;
+  if(sx+w<0||sx>W)continue;
+  ctx.fillStyle='#e99abd';ctx.fillRect(sx,y,w,H-y);
+  ctx.fillStyle='#f8bad4';ctx.fillRect(sx,y,w,7);
+ }
+ // spikes
+ for(let [x,y,w] of L.traps){
+  let sx=x-cam;
+  if(sx+w<0||sx>W)continue;
+  ctx.fillStyle='#d85b8d';
+  for(let a=0;a<w;a+=14){
+   ctx.beginPath();ctx.moveTo(sx+a,y+20);
+   ctx.lineTo(sx+a+7,y);ctx.lineTo(sx+a+14,y+20);ctx.fill();
+  }
+ }
+ // exit
+ let ex=L.len-65-cam;
+ ctx.fillStyle='#fff';ctx.fillRect(ex,295,36,55);
+ ctx.strokeStyle='#d85b8d';ctx.lineWidth=3;ctx.strokeRect(ex,295,36,55);
+ ctx.fillStyle='#d85b8d';ctx.font='bold 10px Arial';
+ ctx.fillText('EXIT',ex+5,320);
+ // player
+ let px=p.x-cam;
+ ctx.fillStyle='#d74d91';ctx.fillRect(px,p.y,p.w,p.h);
+ ctx.fillStyle='#fff';ctx.fillRect(px+4,p.y+6,4,4);
+ ctx.fillRect(px+13,p.y+6,4,4);
+ ctx.fillStyle='#75445c';ctx.fillRect(px+6,p.y+17,9,2);
+ // fake message popups
+ if(L.fake===1&&p.x>650&&p.x<730){
+  ctx.fillStyle='#fff';ctx.fillRect(65,140,230,65);
+  ctx.fillStyle='#d74d91';ctx.font='bold 16px Arial';
+  ctx.fillText('เกือบ ๆ จะถึงละ',100,166);
+  ctx.font='12px Arial';ctx.fillText('เชื่อเราสิ ไม่มีอะไรหรอก',95,188);
+ }
+ if(!active){
+  ctx.fillStyle='#fff';ctx.fillRect(45,145,270,75);
+  ctx.fillStyle='#d74d91';ctx.font='bold 18px Arial';
+  ctx.fillText('ว้าย! โดนหลอกกก',105,176);
+  ctx.font='13px Arial';ctx.fillText('กดเริ่มเกมแล้วลองใหม่!',105,198);
+ }
+ requestAnimationFrame(draw);
+}
+function update(){
+ if(active){
+  p.vx=(keys.right?2.8:0)-(keys.left?2.8:0);
+  p.x=Math.max(0,p.x+p.vx);
+  if(keys.jump&&p.ground){p.vy=-9.5;p.ground=false}
+  p.vy+=.42;p.y+=p.vy;p.ground=false;
+  let L=levels[level];
+  for(let [x,y,w] of L.plats){
+   if(p.x+p.w>x&&p.x<x+w&&p.y+p.h>=y&&
+      p.y+p.h<=y+12&&p.vy>=0){
+    p.y=y-p.h;p.vy=0;p.ground=true;
+   }
+  }
+  for(let [x,y,w] of L.traps){
+   if(p.x+p.w>x+4&&p.x<x+w-4&&
+      p.y+p.h>y+3&&p.y<y+20){die();break}
+  }
+  // troll tricks
+  if(level===0&&p.x>280&&p.x<310&&p.y>250){
+   // the gap is real: don't trust the jump
+  }
+  if(level===1&&p.x>730&&p.x<760&&p.y>240){
+   // a suspiciously long jump before the exit
+  }
+  if(level===2&&p.x>340&&p.x<390&&p.y<290){
+   // no extra help here :)
+  }
+  if(p.y>H+10)die();
+  if(p.x>L.len-75){
+   if(level===0&&p.x>L.len-80){next()}
+   else if(level===1&&p.x>L.len-80){next()}
+   else if(level===2&&p.x>L.len-80){next()}
+   else if(level===3&&p.x>L.len-80){next()}
+  }
+ }
+ requestAnimationFrame(update);
+}
+draw();update();
 </script>
 </body>
 </html>
