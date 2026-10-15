@@ -68,8 +68,8 @@
 <body>
 <div class="sparkles"></div>
 <main>
-  <div class="eyebrow">a little letter, just for you</div>
-  <h1>ถึงคนพิเศษของเค้า ♡</h1>
+  <div class="eyebrow">for you</div>
+  <h1>ถึงคนพิเศษของเค้า 🐈‍⬛</h1>
   <p class="sub">มีจดหมายฉบับหนึ่งที่อยากให้เปิดอ่านนะ</p>
 
   <div class="envelope-wrap" id="envelopeWrap" aria-label="ซองจดหมายสีชมพู">
@@ -78,7 +78,7 @@
     <div class="flap"></div>
     <div class="seal">♥</div>
   </div>
-  <button id="openBtn">🎁❕️</button>
+  <button id="openBtn">ദ്ദി◝ ⩊ ◜.ᐟ'</button>
 
   <section class="panel" id="lovePanel">
     <h2>มีบางอย่างอยากบอกเธอ</h2>
@@ -89,7 +89,7 @@
 
 เค้ารักเธอในแบบที่เธอเป็น และอยากให้ความสัมพันธ์ของเราเป็นที่ที่เราสองคนพูดความรู้สึกกันได้อย่างสบายใจ ไม่ต้องเก็บปัญหาไว้คนเดียว
 
-ขอบคุณที่ยังอ่านจดหมายนี้จนถึงตรงนี้นะ เธอสำคัญกับเค้ามากจริง ๆ ♡</p>
+ขอบคุณที่ยังอ่านจดหมายนี้จนถึงตรงนี้นะ เธอสำคัญกับเค้ามากจริง ๆ ‎𖹭</p>
     <div class="signature">รักเธอเสมอ, N‎𖹭A</div>
   </section>
 
@@ -118,17 +118,24 @@
   const wrap = document.getElementById('envelopeWrap');
   const openBtn = document.getElementById('openBtn');
   const lovePanel = document.getElementById('lovePanel');
-  openBtn.addEventListener('click', () => {
+  const secretBtn = document.getElementById('secretBtn');
+  const secretPanel = document.getElementById('secretPanel');
+
+  openBtn.addEventListener('click', function () {
     const isOpen = wrap.classList.toggle('opened');
     lovePanel.classList.toggle('show', isOpen);
-    openBtn.textContent = isOpen ? 'ปิดจดหมาย ♡' : '🎁❕️;
-    if (!isOpen) document.getElementById('secretPanel').classList.remove('show');
+    openBtn.textContent = isOpen ? 'ปิดจดหมาย ♡' : 'ദ്ദി◝ ⩊ ◜.ᐟ';
+
+    if (!isOpen) {
+      secretPanel.classList.remove('show');
+    }
   });
-  document.getElementById('secretBtn').addEventListener('click', () => {
-    const panel = document.getElementById('secretPanel');
-    panel.classList.toggle('show');
-    document.getElementById('secretBtn').textContent = panel.classList.contains('show') ? 'ซ่อนข้อความลับ ♡' : 'อ่านข้อความลับ 🔐';
-    if (panel.classList.contains('show')) panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+
+  secretBtn.addEventListener('click', function () {
+    const isShown = secretPanel.classList.toggle('show');
+    secretBtn.textContent = isShown
+      ? 'ซ่อนข้อความลับ ‹𝟹'
+      : 'อ่านข้อความลับ ‎𖹭';
   });
 </script>
 </body>
