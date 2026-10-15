@@ -11,13 +11,12 @@
   body {
     margin:0; min-height:100vh; color:var(--cream);
     font-family:system-ui,-apple-system,"Noto Sans Thai",sans-serif;
-    background:radial-gradient(ellipse at top,#51243a 0%,#24121d 45%,#100a0f 100%);
+    background: #ffffff;color: #702b47;
     display:flex; align-items:center; justify-content:center; padding:24px 14px;
     overflow-x:hidden;
   }
-  .sparkles { position:fixed; inset:0; pointer-events:none; opacity:.45;
-    background-image:radial-gradient(#ffdce6 1px,transparent 1px);
-    background-size:37px 37px; mask-image:linear-gradient(to bottom,black,transparent); }
+  .sparkles {
+  display: none; } 
   main { width:min(100%,520px); position:relative; text-align:center; }
   .eyebrow { letter-spacing:.18em; text-transform:uppercase; font-size:.72rem; color:var(--pink); }
   h1 { font-size:clamp(1.8rem,7vw,2.7rem); margin:.5rem 0; line-height:1.25; }
