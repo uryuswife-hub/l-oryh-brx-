@@ -137,31 +137,23 @@ h1,
   </a>
   </div>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const wrap = document.getElementById('envelopeWrap');
-  const openBtn = document.getElementById('openBtn');
-  const lovePanel = document.getElementById('lovePanel');
-  const secretBtn = document.getElementById('secretBtn');
-  const secretPanel = document.getElementById('secretPanel');
+const wrap = document.getElementById('envelopeWrap');
+const openBtn = document.getElementById('openBtn');
+const lovePanel = document.getElementById('lovePanel');
 
-  if (!wrap || !openBtn || !lovePanel) return;
+openBtn.addEventListener('click', () => {
+  wrap.classList.toggle('opened');
+  lovePanel.classList.toggle('show');
+  openBtn.textContent = wrap.classList.contains('opened')
+    ? 'ปิดจดหมาย ♡'
+    : 'ദ്ദി◝ ⩊ ◜.ᐟ';
+});
 
-  openBtn.onclick = function () {
-    const isOpen = wrap.classList.toggle('opened');
-    lovePanel.classList.toggle('show', isOpen);
-    openBtn.textContent = isOpen
-      ? 'ปิดจดหมาย ♡'
-      : 'ദ്ദി◝ ⩊ ◜.ᐟ';
-  };
+const secretBtn = document.getElementById('secretBtn');
+const secretPanel = document.getElementById('secretPanel');
 
-  if (secretBtn && secretPanel) {
-    secretBtn.onclick = function () {
-      const isShown = secretPanel.classList.toggle('show');
-      secretBtn.textContent = isShown
-        ? 'ซ่อนข้อความลับ ‹𝟹'
-        : 'อ่านข้อความลับ 𖹭';
-    };
-  }
+secretBtn.addEventListener('click', () => {
+  secretPanel.classList.toggle('show');
 });
 </script>
 </body>
