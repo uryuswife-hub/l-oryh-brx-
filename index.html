@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#190d14">
 <title>จดหมายถึงคนพิเศษ ♡</พัชชาพร>
 <style>
-  :root { --bg:#160d13; --card:#25141e; --pink:#ffb7ca; --rose:#e86f91; --cream:#fff0e8; --muted:#d9b9c5; }
+  :root { --bg:#160d13; --card:#25141e; --white:#ffffff; --heart:#d4dbff; --cream:#fff0e8; --muted:#d9b9c5; }
   * { box-sizing:border-box; }
   body {
     margin:0; min-height:100vh; color:var(--cream);
@@ -70,7 +70,7 @@
 <main>
   <div class="eyebrow">a little letter, just for you</div>
   <h1>ถึงคนพิเศษของเค้า ♡</h1>
-  <p class="sub">มีจดหมายฉบับหนึ่งที่อยากให้เธอเปิดอ่านนะ</p>
+  <p class="sub">มีจดหมายฉบับหนึ่งที่อยากให้เปิดอ่านนะ</p>
 
   <div class="envelope-wrap" id="envelopeWrap" aria-label="ซองจดหมายสีชมพู">
     <div class="envelope"></div>
@@ -124,7 +124,7 @@
   openBtn.addEventListener('click', () => {
     const isOpen = wrap.classList.toggle('opened');
     lovePanel.classList.toggle('show', isOpen);
-    openBtn.textContent = isOpen ? 'ปิดจดหมาย ♡' : 'open';
+    openBtn.textContent = isOpen ? 'ปิดจดหมาย ♡' : 'close;
     if (!isOpen) document.getElementById('secretPanel').classList.remove('show');
   });
   document.getElementById('secretBtn').addEventListener('click', () => {
