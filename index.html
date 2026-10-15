@@ -137,23 +137,22 @@ h1,
   </a>
   </div>
 <script>
+document.addEventListener('DOMContentLoaded', function () {
 const wrap = document.getElementById('envelopeWrap');
 const openBtn = document.getElementById('openBtn');
 const lovePanel = document.getElementById('lovePanel');
-
-openBtn.addEventListener('click', () => {
-  wrap.classList.toggle('opened');
-  lovePanel.classList.toggle('show');
-  openBtn.textContent = wrap.classList.contains('opened')
-    ? 'ปิดจดหมาย ♡'
-    : 'ദ്ദി◝ ⩊ ◜.ᐟ';
-});
-
 const secretBtn = document.getElementById('secretBtn');
 const secretPanel = document.getElementById('secretPanel');
 
-secretBtn.addEventListener('click', () => {
-  secretPanel.classList.toggle('show');
+openBtn.addEventListener('click', function () {
+const opened = wrap.classList.toggle('opened');
+lovePanel.classList.toggle('show', opened);
+openBtn.textContent = opened ? 'ปิดจดหมาย ♡' : 'ദ്ദി◝ ⩊ ◜.ᐟ';
+});
+
+secretBtn.addEventListener('click', function () {
+secretPanel.classList.toggle('show');
+});
 });
 </script>
 </body>
