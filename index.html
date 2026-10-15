@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#190d14">
-<title>จดหมายถึงคนพิเศษ ♡</title>
+<title>จดหมายถึงคนพิเศษ ♡</พัชชาพร>
 <style>
   :root { --bg:#160d13; --card:#25141e; --pink:#ffb7ca; --rose:#e86f91; --cream:#fff0e8; --muted:#d9b9c5; }
   * { box-sizing:border-box; }
@@ -78,7 +78,7 @@
     <div class="flap"></div>
     <div class="seal">♥</div>
   </div>
-  <button id="openBtn">กดเปิดจดหมาย 💌</button>
+  <button id="openBtn">🎁❓️</button>
 
   <section class="panel" id="lovePanel">
     <h2>มีบางอย่างอยากบอกเธอ</h2>
@@ -90,11 +90,11 @@
 เค้ารักเธอในแบบที่เธอเป็น และอยากให้ความสัมพันธ์ของเราเป็นที่ที่เราสองคนพูดความรู้สึกกันได้อย่างสบายใจ ไม่ต้องเก็บปัญหาไว้คนเดียว
 
 ขอบคุณที่ยังอ่านจดหมายนี้จนถึงตรงนี้นะ เธอสำคัญกับเค้ามากจริง ๆ ♡</p>
-    <div class="signature">รักเธอเสมอ, เค้า ♡</div>
+    <div class="signature">รักเธอเสมอ, N♡A</div>
   </section>
 
   <div class="controls">
-    <button class="secondary" id="secretBtn">อ่านข้อความลับ 🔐</button>
+    <button class="secondary" id="secretBtn">you can see it!</button>
   </div>
   <section class="panel" id="secretPanel">
     <h2>ข้อความลับสำหรับเธอเท่านั้น ♡</h2>
@@ -102,8 +102,8 @@
 
 เราไม่จำเป็นต้องสมบูรณ์แบบ แค่ค่อย ๆ เรียนรู้และดูแลกันให้ดีขึ้นก็พอแล้ว
 
-ถ้าเลือกได้อีกครั้ง เค้าก็ยังอยากมีเธออยู่ในเรื่องราวของเค้าอยู่ดี 💗</p>
-    <div class="signature">นี่เป็นความลับของเรานะ ♡</div>
+ถ้าเลือกได้อีกครั้ง เค้าก็ยังอยากมีเธออยู่ในเรื่องราวของเค้าอยู่ดี </p>
+    <div class="signature">นี่เป็นความลับของเรานะ ‎𖹭</div>
   </section>
 
   <div class="music">
@@ -124,7 +124,7 @@
   openBtn.addEventListener('click', () => {
     const isOpen = wrap.classList.toggle('opened');
     lovePanel.classList.toggle('show', isOpen);
-    openBtn.textContent = isOpen ? 'ปิดจดหมาย ♡' : 'กดเปิดจดหมาย 💌';
+    openBtn.textContent = isOpen ? 'ปิดจดหมาย ♡' : 'open';
     if (!isOpen) document.getElementById('secretPanel').classList.remove('show');
   });
   document.getElementById('secretBtn').addEventListener('click', () => {
