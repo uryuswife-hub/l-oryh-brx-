@@ -4,204 +4,356 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>LOVE.exe 💗</title>
+<title>LOVE QUEST — ตามหารักแท้</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#fff2f7;color:#75445c;
-font-family:Arial,sans-serif;text-align:center;padding:20px 10px}
-h1{margin:8px;font-size:27px}
-p{font-size:14px}
-#game{width:min(100%,400px);margin:auto}
-canvas{width:100%;background:#ffe3ef;border:3px solid #f3a9c8;
-border-radius:15px;display:block;touch-action:none}
-button{border:0;border-radius:13px;padding:13px 18px;
-background:#f4a5c7;color:#702b4c;font-size:17px;
-font-weight:bold;margin:5px;touch-action:none}
-button:active{background:#e879ad}
-#message{font-weight:bold;min-height:42px;padding:8px}
-.controls{display:flex;justify-content:center;align-items:center}
-.small{font-size:12px;color:#a46b85}
+body{
+ margin:0;background:#171426;color:#fff0f7;
+ font-family:Arial,sans-serif;text-align:center;
+ padding:18px 12px;
+}
+#game{max-width:480px;margin:auto}
+h1{font-size:27px;color:#ffacd6;margin:8px}
+.subtitle{color:#d6badc;font-size:13px}
+#scene{
+ min-height:180px;padding:22px 14px;margin:16px 0;
+ border:1px solid #8d6aab;border-radius:20px;
+ background:linear-gradient(145deg,#352344,#1c203b);
+ box-shadow:0 0 25px #b44c8730;
+}
+#emoji{font-size:65px;margin:8px}
+#place{color:#ffb6dd;font-size:12px;letter-spacing:2px}
+#title{font-size:22px;margin:12px 0}
+#story{font-size:15px;line-height:1.9;white-space:pre-line}
+#dialogue{
+ background:#29213c;border:1px solid #735487;
+ border-radius:15px;padding:16px;margin:12px 0;
+ min-height:100px;line-height:1.8;text-align:left;
+}
+#speaker{color:#ffacd6;font-weight:bold}
+#words{margin-top:7px;white-space:pre-line}
+button{
+ background:#f0a4ce;color:#351d3c;border:0;
+ border-radius:12px;padding:13px 12px;margin:5px;
+ font-size:14px;font-weight:bold;cursor:pointer;
+}
+button:active{transform:scale(.97)}
+button.secondary{background:#49385e;color:#fff0f7}
+button:disabled{opacity:.35}
+#actions{display:flex;flex-wrap:wrap;justify-content:center}
+#actions button{flex:1 1 40%;max-width:100%}
+.bar{height:14px;background:#403047;border-radius:20px;overflow:hidden;margin:8px 0}
+#fill{height:100%;width:0;background:linear-gradient(90deg,#ff72b6,#ffe0f1);transition:width .35s}
+#meter{color:#ffc7e5;font-size:13px}
+#hint{color:#c5b1d6;font-size:12px;line-height:1.8}
+#next{width:100%;background:#ffcee6}
 </style>
 </head>
 <body>
-<h1>LOVE.exe 💗</h1>
-<p>ผ่านให้ครบ 4 ด่านละกัน ( ＾ω＾ ) </p>
 <div id="game">
-<canvas id="c" width="360" height="400"></canvas>
-<div id="message">พร้อมยัง? อย่าวีนก่อนน้า ฮ่า ๆ</div>
-<div class="controls">
-<button id="left">◀</button>
-<button id="jump">JUMP ↑</button>
-<button id="right">▶</button>
+<h1>♡ LOVE QUEST ♡</h1>
+<div class="subtitle">การเดินทางเพื่อตามหารักแท้ ก่อนรุ่งสาง</div>
+
+<div id="scene">
+<div id="place">PROLOGUE</div>
+<div id="emoji">🌙</div>
+<div id="title">นิทานแห่งรักแท้</div>
+<div id="story">ในโลกที่ความรักกลายเป็นเวทมนตร์
+มีเพียงหัวใจที่จริงใจเท่านั้น
+ที่จะทำลายคำสาปโบราณได้</div>
 </div>
-<button id="start">เริ่มเกม / เล่นใหม่</button>
-<p class="small">เดินด้วย ◀ ▶ · กระโดดด้วย JUMP · ห้ามด่าเกมนะเพราะเค้าตั้งใจมาก</p>
+
+<div id="dialogue">
+<div id="speaker">ผู้บรรยาย</div>
+<div id="words">การผจญภัยของเธอกำลังจะเริ่มขึ้น...</div>
 </div>
+
+<div id="meter"></div>
+<div class="bar"><div id="fill"></div></div>
+<div id="actions">
+<button id="start">เริ่มการเดินทาง ✨</button>
+</div>
+<div id="hint">อ่านบทสนทนาให้ดี บางครั้งคำตอบสำคัญกว่าพลัง</div>
+</div>
+
 <script>
-const c=document.getElementById('c'),ctx=c.getContext('2d');
-const msg=document.getElementById('message');
-const W=360,H=400;
-let level=0,dead=0,active=false,won=false,cam=0;
-let keys={left:false,right:false,jump:false};
-let p={x:25,y:300,vx:0,vy:0,w:20,h:25,ground:false};
-const levels=[
- {name:'ด่าน 1: ก้าวแรกของฟามรัก ≽(˵◝ ⩊ ◜˵ マ≼',len:900,
-  plats:[[0,350,210],[260,350,180],[500,350,150],[710,350,190]],
-  traps:[[185,330,60],[420,330,60],[640,330,60]],fake:0},
- {name:'ด่าน 2: รักติดไซเรน 📢',len:900,
-  plats:[[0,350,240],[290,350,170],[510,350,180],[760,350,140]],
-  traps:[[210,330,55],[380,330,50],[550,330,60],[800,330,50]],fake:1},
- {name:'ด่าน 3: ใกล้ละ ๆ',len:950,
-  plats:[[0,350,170],[220,315,110],[390,350,120],[570,310,120],[760,350,190]],
-  traps:[[145,330,55],[300,295,45],[475,330,40],[650,290,40]],fake:2},
- {name:'ด่าน 4: the end ✨️',len:1000,
-  plats:[[0,350,220],[270,320,100],[430,350,130],[620,310,100],[790,350,210]],
-  traps:[[195,330,55],[340,300,45],[510,330,45],[690,290,45],[850,330,55]],fake:3}
+const $=id=>document.getElementById(id);
+
+let stage="intro";
+let love=0;
+let clue=0;
+let talked=false;
+let ending=false;
+
+function scene(place,emoji,title,story,speaker,words){
+ $("place").textContent=place;
+ $("emoji").textContent=emoji;
+ $("title").textContent=title;
+ $("story").textContent=story;
+ $("speaker").textContent=speaker;
+ $("words").textContent=words;
+ $("fill").style.width="0%";
+ $("meter").textContent="";
+}
+
+function buttons(items){
+ $("actions").innerHTML="";
+ items.forEach(item=>{
+  const b=document.createElement("button");
+  b.textContent=item.label;
+  if(item.secondary)b.className="secondary";
+  b.onclick=item.fn;
+  $("actions").appendChild(b);
+ });
+}
+
+function meter(max){
+ $("meter").textContent="♡ พลังความรัก: "+love+" / "+max;
+ $("fill").style.width=Math.min(100,love/max*100)+"%";
+}
+
+function dialogue(speaker,words,nextLabel,fn){
+ $("speaker").textContent=speaker;
+ $("words").textContent=words;
+ buttons([{label:nextLabel||"ต่อไป →",fn:fn}]);
+}
+
+function start(){
+ stage="forest";
+ scene("CHAPTER 01 · THE CURSED FOREST","🌲🐍",
+ "ป่าต้องสาป",
+ "หมอกสีม่วงปกคลุมป่า เสียงบางอย่างเลื้อยผ่านพุ่มไม้\\n\\nเธอต้องตามหาหัวใจเวทมนตร์เพื่อเปิดทางต่อไป",
+ "ผู้บรรยาย",
+ "เสียงปริศนา: ใครก็ตามที่เข้ามาในป่าแห่งนี้ จะต้องมอบสิ่งที่ล้ำค่าที่สุดให้ข้า...");
+ buttons([{label:"เดินลึกเข้าไปในป่า 🌿",fn:meetSnake}]);
+}
+
+function meetSnake(){
+ stage="snake";
+ love=0;talked=false;
+ scene("BOSS 01 · FOREST","🐍",
+ "อสรพิษแห่งรัตติกาล",
+ "งูยักษ์สีดำอมม่วงเลื้อยออกมาขวางทาง ดวงตาของมันเรืองแสง\\n\\nดูเหมือนมันจะไม่ต้องการต่อสู้... แต่อยากรู้ว่าความรักคืออะไร",
+ "งูยักษ์",
+ "มนุษย์ตัวจ้อย... เจ้ากล้ามาที่นี่เพื่ออะไร?");
+ meter(100);
+ buttons([
+  {label:"คุยกับงู 💬",fn:snakeTalk},
+  {label:"มอบหัวใจเวทมนตร์ 💗",fn:()=>snakeLove(25)},
+  {label:"ชมว่างูสวยสง่า ✨",fn:()=>snakeLove(25)}
+ ]);
+}
+
+function snakeTalk(){
+ talked=true;
+ dialogue("งูยักษ์",
+ "สวยงั้นหรือ? ทุกคนที่เห็นข้าล้วนหนีไป... เจ้าไม่กลัวข้าจริง ๆ หรือ?",
+ "ไม่กลัวหรอก 💗",
+ ()=>snakeLove(25));
+}
+
+function snakeLove(amount){
+ love=Math.min(100,love+amount);
+ meter(100);
+ if(love>=100){snakeTransform();return}
+ dialogue("งูยักษ์",
+ love>=50
+ ?"หัวใจของข้า... ทำไมถึงเต้นแรงเช่นนี้? เจ้าร่ายมนตร์อะไรใส่ข้า!"
+ :"งูยักษ์มองหัวใจในมือเธออย่างสงสัย แต่ก็ขยับเข้ามาใกล้อีกนิด",
+ "ส่งความรักอีก",
+ ()=>snakeLove(25));
+}
+
+function snakeTransform(){
+ stage="snakeEnd";
+ scene("CUTSCENE 01 · TRANSFORMATION","🌸🐍",
+ "คำสาปคลายลง",
+ "แสงสีชมพูโอบล้อมร่างของอสรพิษ เกล็ดสีดำค่อย ๆ เปลี่ยนเป็นประกายสีเงิน",
+ "งูยักษ์",
+ "ข้าเข้าใจแล้ว... ความรักไม่ใช่สิ่งที่ต้องแย่งชิง");
+ buttons([{label:"ดูการเปลี่ยนร่าง ✨",fn:()=>{
+  scene("CUTSCENE 01 · TRUE FORM","👸🐍",
+  "หญิงสาวแห่งพงไพร",
+  "งูยักษ์กลายเป็นหญิงสาวงดงามครึ่งคนครึ่งงู เส้นผมยาวสยายราวกับสายน้ำตกใต้แสงจันทร์",
+  "หญิงสาวครึ่งงู",
+  "ขอบคุณที่มองเห็นหัวใจของข้า... จงเดินทางต่อไป และค้นหาคนที่รอเจ้าอยู่");
+  buttons([{label:"เธอสลายเป็นแสง 🌟",fn:()=>{
+   scene("CUTSCENE","✨🌸",
+   "ของขวัญจากป่า",
+   "ร่างของหญิงสาวสลายเป็นละอองแสง เหลือเพียงดอกไม้เรืองแสงที่ชี้ทางไปยังแม่น้ำ",
+   "ผู้บรรยาย","ดอกไม้กระซิบว่า: ผู้ที่รอเจ้าอยู่ ยังมีความลับที่ต้องเปิดเผย");
+   buttons([{label:"เดินทางสู่แม่น้ำ 🌊",fn:meetFish}]);
+  }}]);
+ }}]);
+}
+
+function meetFish(){
+ stage="fish";love=0;
+ scene("CHAPTER 02 · THE MYSTIC RIVER","🌊🐟",
+ "แม่น้ำแห่งความทรงจำ",
+ "แม่น้ำเรืองแสงทอดยาวอยู่ใต้แสงจันทร์ มีปลาตัวใหญ่สวมมงกุฎว่ายวนอยู่กลางน้ำ",
+ "ปลาปริศนา",
+ "เจ้ามาจากป่าที่ถูกสาปสินะ? ข้าไม่เชื่อในความรักของมนุษย์หรอก");
+ meter(150);
+ buttons([
+  {label:"ถามถึงอดีตของมัน 💬",fn:fishTalk},
+  {label:"มอบไข่มุกแห่งรัก 💗",fn:()=>fishLove(30)},
+  {label:"ร้องเพลงให้ฟัง 🎵",fn:()=>fishLove(30)}
+ ]);
+}
+
+function fishTalk(){
+ dialogue("ปลาปริศนา",
+ "ครั้งหนึ่งข้าเคยเชื่อใจใครบางคน... แต่สุดท้ายเขาก็จากไป",
+ "ข้าจะอยู่ฟังเรื่องของเจ้าเอง!",
+ ()=>fishLove(30));
+}
+
+function fishLove(amount){
+ love=Math.min(150,love+amount);
+ meter(150);
+ if(love>=150){fishTransform();return}
+ dialogue("ปลาปริศนา",
+ "ข้าเริ่มเข้าใจแล้ว... บางทีความรักอาจไม่ใช่เรื่องของการไม่จากลา แต่คือการได้พบกัน",
+ "มอบความรักอีก",
+ ()=>fishLove(30));
+}
+
+function fishTransform(){
+ stage="fishEnd";
+ scene("CUTSCENE 02 · TRANSFORMATION","🐟✨",
+ "เสียงเพลงใต้สายน้ำ",
+ "เกล็ดของปลาส่องประกาย แสงระยิบระยับหมุนวนรอบแม่น้ำ",
+ "ปลาปริศนา",
+ "ข้าอยากเห็นโลกบนผิวน้ำ... สักครั้งหนึ่ง");
+ buttons([{label:"ดูการเปลี่ยนร่าง 🫧",fn:()=>{
+  scene("CUTSCENE 02 · TRUE FORM","🧜‍♀️💗",
+  "นางเงือกแห่งแม่น้ำ",
+  "ปลาปริศนากลายเป็นนางเงือกผู้สง่างาม หางสีเงินสะท้อนแสงจันทร์ และเส้นผมพลิ้วไหวตามกระแสน้ำ",
+  "นางเงือก",
+  "ขอบคุณที่ทำให้ข้าเชื่อในความรักอีกครั้ง... เส้นทางสู่ภูเขาอยู่หลังม่านน้ำตก");
+  buttons([{label:"นางเงือกสลายไปในสายน้ำ 🌊",fn:()=>{
+   scene("CUTSCENE","🫧🌙",
+   "ความลับของสายน้ำ",
+   "นางเงือกสลายเป็นฟองแสง ลอยหายไปกับกระแสน้ำ เหลือเพียงแผนที่เก่าแก่",
+   "ผู้บรรยาย","บนแผนที่มีข้อความว่า: จงไขปริศนาสามข้อ ก่อนแสงแรกจะมาถึง");
+   buttons([{label:"ไปค้นหาความลับ 🔎",fn:mystery}]);
+  }}]);
+ }}]);
+}
+
+function mystery(){
+ stage="mystery";clue=0;
+ scene("CHAPTER 03 · THE ANCIENT SECRET","📜🔮",
+ "ปริศนาก่อนรุ่งสาง",
+ "เธอพบแท่นหินสามแท่น แต่ละแท่นมีคำถามที่ต้องตอบให้ถูก เพื่อเปิดทางขึ้นภูเขา",
+ "จารึกโบราณ",
+ "จงใช้หัวใจและสติปัญญา ไขความลับทั้งสาม แล้วประตูจะเปิดออก");
+ showClues();
+}
+
+const riddles=[
+ {q:"ปริศนาที่ 1: สิ่งใดแบ่งปันแล้วไม่เคยลดลง?",opts:["ความรัก 💗","ทองคำ 🪙","ความลับ 🤫"],correct:0,why:"ถูกต้อง! ความรักยิ่งแบ่งปันก็ยิ่งเติบโต"},
+ {q:"ปริศนาที่ 2: สิ่งใดนำทางในความมืดได้ โดยไม่ต้องใช้แสง?",opts:["แผนที่ 🗺️","ความกล้า 🛡️","เสียงนาฬิกา ⏰"],correct:1,why:"ถูกต้อง! ความกล้าช่วยให้ก้าวต่อไปได้แม้ยังมองไม่เห็นทาง"},
+ {q:"ปริศนาที่ 3: สิ่งใดทำให้คนสองคนใกล้กัน แม้จะอยู่ห่างไกล?",opts:["เวทมนตร์ 🔮","ความเข้าใจ 💞","มงกุฎ 👑"],correct:1,why:"ถูกต้อง! ความเข้าใจทำให้หัวใจเชื่อมถึงกัน"}
 ];
-function reset(){
- p={x:25,y:300,vx:0,vy:0,w:20,h:25,ground:false};
- cam=0;active=true;won=false;
- msg.textContent=levels[level].name+' — สู้ ๆ นะ 😈';
-}
-function die(){
- if(!active)return;
- dead++;reset();
- msg.textContent='ตายอีก ครั้งที่ '+dead;
-}
-function next(){
- level++;
- if(level>=4){
- active=false;won=true
- msg.textContent='YOU WIN!! 💗 รางวัลของเธอคือ i luv you jupjup^^ ';
- }else reset()
-}
-function bind(id,k){
- let b=document.getElementById(id);
- b.addEventListener('pointerdown',e=>{e.preventDefault();keys[k]=true});
- for(let ev of ['pointerup','pointercancel','pointerleave'])
- b.addEventListener(ev,e=>{keys[k]=false});
-}
-bind('left','left');bind('right','right');bind('jump','jump');
-document.getElementById('start').onclick=()=>{
-  level=0;
-  dead=0;
-  reset();
-};
-reset();
-window.addEventListener('keydown',e=>{
- if(['ArrowLeft','ArrowRight','ArrowUp',' '].includes(e.key))e.preventDefault();
- if(e.key==='ArrowLeft'||e.key==='a')keys.left=true;
- if(e.key==='ArrowRight'||e.key==='d')keys.right=true;
- if(e.key==='ArrowUp'||e.key===' ')keys.jump=true;
-});
-window.addEventListener('keyup',e=>{
- if(e.key==='ArrowLeft'||e.key==='a')keys.left=false;
- if(e.key==='ArrowRight'||e.key==='d')keys.right=false;
- if(e.key==='ArrowUp'||e.key===' ')keys.jump=false;
-});
-function draw(){
- ctx.clearRect(0,0,W,H);
- ctx.fillStyle='#75445c';ctx.font='bold 14px Arial';
- ctx.fillText('LEVEL '+(level+1)+'/4',12,22);
- ctx.fillText('💀 '+dead,290,22);
- if(won){
-  ctx.font='bold 25px Arial';ctx.fillStyle='#d74d91';
-  ctx.fillText('YOU WIN!! 💗',75,165);
-  ctx.font='17px Arial';ctx.fillText('l oryh brx',88,205);
-  ctx.font='12px Arial';ctx.fillText('ขอบคุณที่เล่นจนจบนะ',100,235);
-  requestAnimationFrame(draw);return;
+
+function showClues(){
+ if(clue>=3){
+  scene("SECRET UNLOCKED","🌄🔓",
+  "ประตูสู่ภูเขาเปิดแล้ว",
+  "แสงแรกกำลังจะปรากฏ เธอต้องรีบขึ้นไปก่อนรุ่งสาง",
+  "ผู้บรรยาย","ทั้งสามจารึกส่องสว่าง เส้นทางขึ้นภูเขาปรากฏขึ้นตรงหน้า");
+  buttons([{label:"ปีนขึ้นภูเขา ⛰️",fn:meetDragon}]);
+  return;
  }
- const L=levels[level];
- let target=Math.max(0,Math.min(L.len-W,p.x-130));
- cam+=(target-cam)*.12;
- // clouds
- ctx.fillStyle='#fff8fc';
- for(let i=0;i<5;i++){
-  let x=((i*110-cam*.25)%420+420)%420;
-  ctx.beginPath();ctx.arc(x,70+i%2*35,17,0,7);ctx.fill();
- }
- // platforms
- for(let [x,y,w] of L.plats){
-  let sx=x-cam;
-  if(sx+w<0||sx>W)continue;
-  ctx.fillStyle='#e99abd';ctx.fillRect(sx,y,w,H-y);
-  ctx.fillStyle='#f8bad4';ctx.fillRect(sx,y,w,7);
- }
- // spikes
- for(let [x,y,w] of L.traps){
-  let sx=x-cam;
-  if(sx+w<0||sx>W)continue;
-  ctx.fillStyle='#d85b8d';
-  for(let a=0;a<w;a+=14){
-   ctx.beginPath();ctx.moveTo(sx+a,y+20);
-   ctx.lineTo(sx+a+7,y);ctx.lineTo(sx+a+14,y+20);ctx.fill();
-  }
- }
- // exit
- let ex=L.len-65-cam;
- ctx.fillStyle='#fff';ctx.fillRect(ex,295,36,55);
- ctx.strokeStyle='#d85b8d';ctx.lineWidth=3;ctx.strokeRect(ex,295,36,55);
- ctx.fillStyle='#d85b8d';ctx.font='bold 10px Arial';
- ctx.fillText('EXIT',ex+5,320);
- // player
- let px=p.x-cam;
- ctx.fillStyle='#d74d91';ctx.fillRect(px,p.y,p.w,p.h);
- ctx.fillStyle='#fff';ctx.fillRect(px+4,p.y+6,4,4);
- ctx.fillRect(px+13,p.y+6,4,4);
- ctx.fillStyle='#75445c';ctx.fillRect(px+6,p.y+17,9,2);
- // fake message popups
- if(L.fake===1&&p.x>650&&p.x<730){
-  ctx.fillStyle='#fff';ctx.fillRect(65,140,230,65);
-  ctx.fillStyle='#d74d91';ctx.font='bold 16px Arial';
-  ctx.fillText('เกือบ ๆ จะถึงละ',100,166);
-  ctx.font='12px Arial';ctx.fillText('เชื่อเราสิ ไม่มีอะไรหรอก',95,188);
- }
- if(!active){
-  ctx.fillStyle='#fff';ctx.fillRect(45,145,270,75);
-  ctx.fillStyle='#d74d91';ctx.font='bold 18px Arial';
-  ctx.fillText('ว้าย! โดนหลอกกก',105,176);
-  ctx.font='13px Arial';ctx.fillText('กดเริ่มเกมแล้วลองใหม่!',105,198);
- }
- requestAnimationFrame(draw);
-}
-function update(){
- if(active){
-  p.vx=(keys.right?2.8:0)-(keys.left?2.8:0);
-  p.x=Math.max(0,p.x+p.vx);
-  if(keys.jump&&p.ground){p.vy=-9.5;p.ground=false}
-  p.vy+=.42;p.y+=p.vy;p.ground=false;
-  let L=levels[level];
-  for(let [x,y,w] of L.plats){
-   if(p.x+p.w>x&&p.x<x+w&&p.y+p.h>=y&&
-      p.y+p.h<=y+12&&p.vy>=0){
-    p.y=y-p.h;p.vy=0;p.ground=true;
+ const r=riddles[clue];
+ $("place").textContent="RIDDLE "+(clue+1)+" / 3";
+ $("emoji").textContent="🗿";
+ $("title").textContent="แท่นหินปริศนา";
+ $("story").textContent=r.q;
+ $("speaker").textContent="จารึกโบราณ";
+ $("words").textContent="เลือกคำตอบให้ถูก เพื่อปลดล็อกเส้นทาง";
+ buttons(r.opts.map((o,i)=>({
+  label:o,
+  fn:()=>{
+   if(i===r.correct){
+    clue++;
+    dialogue("จารึกโบราณ",r.why,"ค้นหาปริศนาข้อต่อไป →",showClues);
+   }else{
+    dialogue("จารึกโบราณ","ผิดแล้ว... ลองคิดอีกครั้งนะ อย่าเพิ่งยอมแพ้","ลองอีกครั้ง",showClues);
    }
   }
-  for(let [x,y,w] of L.traps){
-   if(p.x+p.w>x+4&&p.x<x+w-4&&
-      p.y+p.h>y+3&&p.y<y+20){die();break}
-  }
-  // troll tricks
-  if(level===0&&p.x>280&&p.x<310&&p.y>250){
-   // the gap is real: don't trust the jump
-  }
-  if(level===1&&p.x>730&&p.x<760&&p.y>240){
-   // a suspiciously long jump before the exit
-  }
-  if(level===2&&p.x>340&&p.x<390&&p.y<290){
-   // no extra help here :)
-  }
-  if(p.y>H+10)die();
-  if(p.x>L.len-75){
-   if(level===0&&p.x>L.len-80){next()}
-   else if(level===1&&p.x>L.len-80){next()}
-   else if(level===2&&p.x>L.len-80){next()}
-   else if(level===3&&p.x>L.len-80){next()}
-  }
- }
- requestAnimationFrame(update);
+ })));
 }
-draw();update();
+
+function meetDragon(){
+ stage="dragon";love=0;
+ scene("FINAL BOSS · MOUNTAIN PEAK","🐉🔥",
+ "มังกรผู้เดียวดาย",
+ "บนยอดเขาสูง มังกรยักษ์เฝ้าประตูแห่งรุ่งอรุณ เปลวไฟสีม่วงล้อมรอบร่างของมัน",
+ "มังกร",
+ "เจ้ามาไกลถึงเพียงนี้เพื่ออะไร? ข้าไม่เคยได้รับความรักจากใคร และไม่ต้องการมัน!");
+ meter(500);
+ buttons([
+  {label:"พูดคุยกับมังกร 💬",fn:dragonTalk},
+  {label:"ส่งหัวใจเวทมนตร์ +50 💗",fn:()=>dragonLove(50)},
+  {label:"เล่าเรื่องการเดินทาง ✨",fn:()=>dragonLove(50)}
+ ]);
+}
+
+function dragonTalk(){
+ dialogue("มังกร",
+ "เจ้าผ่านทั้งป่า แม่น้ำ และปริศนามาได้... เหตุใดจึงยังอยากเข้าใกล้สัตว์ประหลาดเช่นข้า?",
+ "เพราะทุกคนสมควรได้รับความรัก 💗",
+ ()=>dragonLove(50));
+}
+
+function dragonLove(amount){
+ love=Math.min(500,love+amount);
+ meter(500);
+ if(love>=500){dragonTransform();return}
+ dialogue("มังกร",
+ love>=250
+ ?"เปลวไฟของมังกรเริ่มกลายเป็นประกายหัวใจ... ข้าไม่เข้าใจความรู้สึกนี้เลย"
+ :"มังกรรับหัวใจเวทมนตร์ไว้เงียบ ๆ เป็นครั้งแรกที่มีใครมอบสิ่งใดให้โดยไม่หวังสิ่งตอบแทน",
+ "ส่งความรักอีก 💗",
+ ()=>dragonLove(50));
+}
+
+function dragonTransform(){
+ stage="ending";
+ scene("FINAL CUTSCENE · TRUE LOVE","🐉💗",
+ "หัวใจที่ถูกปลดปล่อย",
+ "เมื่อความรักเต็มครบ 500 เปลวไฟสีม่วงดับลง แสงสีทองสว่างทั่วทั้งยอดเขา",
+ "มังกร",
+ "ข้า... ไม่ต้องอยู่เพียงลำพังอีกต่อไปแล้วสินะ?");
+ buttons([{label:"ดูร่างที่แท้จริง 👑",fn:princess}]);
+}
+
+function princess(){
+ ending=true;
+ scene("TRUE ENDING","👸✨",
+ "เจ้าหญิงแห่งรุ่งอรุณ",
+ "มังกรกลายเป็นเจ้าหญิงผู้สง่างาม สวมมงกุฎสีทอง ก่อนจะยิ้มให้เธอเป็นครั้งสุดท้าย",
+ "เจ้าหญิง",
+ "เจ้าทำให้ข้าเข้าใจว่า ความรักไม่ใช่การเปลี่ยนใครให้เป็นคนอื่น แต่คือการยอมรับหัวใจของกันและกัน");
+ buttons([{label:"ดูฉากจบสุดท้าย 💗",fn:finish}]);
+}
+
+function finish(){
+ stage="finished";
+ scene("THE END · TRUE LOVE","🌅💗",
+ "ตามหารักแท้สำเร็จ",
+ "เธอออกเดินทางในคืนที่มืดมิด และกลับมาในยามรุ่งอรุณ\\n\\nป่ามอบความกล้า แม่น้ำมอบความเข้าใจ และภูเขามอบความรักที่แท้จริง",
+ "SYSTEM",
+ "QUEST COMPLETE ♡\\n\\nถึงคนที่เล่นเกมนี้จนจบ:\\nI love you. jupjup ^^");
+ buttons([{label:"เริ่มการผจญภัยใหม่ ↻",fn:()=>location.reload()}]);
+ $("meter").textContent="♡ LOVE QUEST COMPLETE";
+ $("fill").style.width="100%";
+}
+
+$("start").onclick=start;
 </script>
 </body>
 </html>
