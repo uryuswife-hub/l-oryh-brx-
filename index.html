@@ -82,7 +82,12 @@ function bind(id,k){
  b.addEventListener(ev,e=>{keys[k]=false});
 }
 bind('left','left');bind('right','right');bind('jump','jump');
-document.getElementById('start').onclick=()=>{level=0;dead=0;reset()};
+document.getElementById('start').onclick=()=>{
+  level=0;
+  dead=0;
+  reset();
+};
+reset();
 window.addEventListener('keydown',e=>{
  if(['ArrowLeft','ArrowRight','ArrowUp',' '].includes(e.key))e.preventDefault();
  if(e.key==='ArrowLeft'||e.key==='a')keys.left=true;
