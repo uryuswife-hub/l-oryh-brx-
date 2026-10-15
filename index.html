@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#190d14">
+<title>จดหมายถึงคนพิเศษ ♡</title>
+<style>
+  :root { --bg:#160d13; --card:#25141e; --pink:#ffb7ca; --rose:#e86f91; --cream:#fff0e8; --muted:#d9b9c5; }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; min-height:100vh; color:var(--cream);
+    font-family:system-ui,-apple-system,"Noto Sans Thai",sans-serif;
+    background:radial-gradient(ellipse at top,#51243a 0%,#24121d 45%,#100a0f 100%);
+    display:flex; align-items:center; justify-content:center; padding:24px 14px;
+    overflow-x:hidden;
+  }
+  .sparkles { position:fixed; inset:0; pointer-events:none; opacity:.45;
+    background-image:radial-gradient(#ffdce6 1px,transparent 1px);
+    background-size:37px 37px; mask-image:linear-gradient(to bottom,black,transparent); }
+  main { width:min(100%,520px); position:relative; text-align:center; }
+  .eyebrow { letter-spacing:.18em; text-transform:uppercase; font-size:.72rem; color:var(--pink); }
+  h1 { font-size:clamp(1.8rem,7vw,2.7rem); margin:.5rem 0; line-height:1.25; }
+  .sub { color:var(--muted); margin:0 auto 24px; max-width:34ch; }
+  .envelope-wrap { margin:24px auto 20px; width:min(300px,82vw); height:205px; position:relative; perspective:900px; }
+  .envelope {
+    position:absolute; bottom:0; width:100%; height:150px; border-radius:8px;
+    background:linear-gradient(135deg,#f6b4c7,#d9678c); box-shadow:0 18px 45px #0007;
+  }
+  .envelope:before { content:""; position:absolute; inset:0; background:linear-gradient(35deg,transparent 49%,#f9cad7 50%) left bottom/50% 100% no-repeat,
+      linear-gradient(-35deg,transparent 49%,#e98aa7 50%) right bottom/50% 100% no-repeat; }
+  .flap { position:absolute; z-index:3; top:55px; left:0; width:100%; height:100px; transform-origin:top; transition:transform .75s ease; }
+  .flap:before { content:""; position:absolute; inset:0; background:#ffcfdb; clip-path:polygon(0 0,100% 0,50% 100%); filter:drop-shadow(0 4px 3px #8b315055); }
+  .seal { position:absolute; z-index:4; left:50%; top:116px; transform:translateX(-50%); width:44px;height:44px;border-radius:50%;
+    background:#a82f59;color:#fff0e8;display:grid;place-items:center;font-size:1.35rem;box-shadow:0 4px 12px #6a183a55; }
+  .letter {
+    position:absolute; z-index:2; left:7%; bottom:10px; width:86%; height:135px; padding:16px 12px;
+    border-radius:6px; background:#fff5f0; color:#702b47; transition:transform .8s ease, bottom .8s ease;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:0 4px 14px #0002;
+  }
+  .letter small { font-size:.76rem; }
+  .letter strong { font-family:Georgia,serif; font-size:1.5rem; margin:6px; }
+  .opened .flap { transform:rotateX(180deg); z-index:1; }
+  .opened .letter { transform:translateY(-75px); bottom:28px; }
+  .opened .seal { opacity:0; transition:opacity .2s; }
+  button, .music-label {
+    border:1px solid #f4a5bd; border-radius:999px; padding:12px 18px; color:#fff5f7;
+    background:linear-gradient(135deg,#a83b63,#71314d); font:inherit; cursor:pointer;
+    box-shadow:0 7px 20px #0003; transition:transform .15s,filter .15s;
+  }
+  button:hover { filter:brightness(1.1); } button:active { transform:scale(.98); }
+  .secondary { background:#ffffff0b; border-color:#a96a82; box-shadow:none; }
+  .panel { display:none; text-align:left; margin:22px 0 0; padding:22px; border:1px solid #a95a78;
+    border-radius:18px; background:#24131ddd; box-shadow:0 18px 45px #0003; animation:fade .5s ease; }
+  .panel.show { display:block; }
+  .panel h2 { color:var(--pink); font-size:1.2rem; margin:0 0 12px; text-align:center; }
+  .panel p { line-height:1.9; white-space:pre-line; margin:0 0 12px; }
+  .signature { text-align:right; color:var(--pink); margin-top:18px; }
+  .controls { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:14px; }
+  .music { margin:22px 0 0; padding:16px; background:#ffffff09; border:1px solid #704258; border-radius:14px; }
+  .music p { color:var(--muted); font-size:.88rem; margin:6px 0 12px; }
+  audio { width:100%; height:38px; }
+  .hint { color:#cba7b6; font-size:.78rem; line-height:1.6; margin-top:18px; }
+  @keyframes fade { from {opacity:0; transform:translateY(8px)} to {opacity:1;transform:translateY(0)} }
+  @media (prefers-reduced-motion:reduce) { *,*:before,*:after { animation:none!important; transition:none!important; } }
+</style>
+</head>
+<body>
+<div class="sparkles"></div>
+<main>
+  <div class="eyebrow">a little letter, just for you</div>
+  <h1>ถึงคนพิเศษของเค้า ♡</h1>
+  <p class="sub">มีจดหมายฉบับหนึ่งที่อยากให้เธอเปิดอ่านนะ</p>
+
+  <div class="envelope-wrap" id="envelopeWrap" aria-label="ซองจดหมายสีชมพู">
+    <div class="envelope"></div>
+    <div class="letter"><small>To my favorite person</small><strong>For You ♡</strong><small>ด้วยรักเสมอ</small></div>
+    <div class="flap"></div>
+    <div class="seal">♥</div>
+  </div>
+  <button id="openBtn">กดเปิดจดหมาย 💌</button>
+
+  <section class="panel" id="lovePanel">
+    <h2>มีบางอย่างอยากบอกเธอ</h2>
+    <p>ขอบคุณที่เข้ามาเป็นความสุขในชีวิตเค้านะ
+เธออาจไม่รู้ว่าการมีเธออยู่ทำให้วันธรรมดาของเค้ามีความหมายขึ้นแค่ไหน
+
+เค้าอาจไม่ได้พูดเก่งทุกครั้ง และบางเวลาก็คิดไม่รอบคอบจนทำให้เธอเสียใจ เค้าขอโทษจริง ๆ นะ เค้าอยากเรียนรู้ที่จะรับฟังเธอให้มากขึ้น ใส่ใจความรู้สึกของเธอ และปรับปรุงตัวเองด้วยการกระทำ ไม่ใช่แค่คำพูด
+
+เค้ารักเธอในแบบที่เธอเป็น และอยากให้ความสัมพันธ์ของเราเป็นที่ที่เราสองคนพูดความรู้สึกกันได้อย่างสบายใจ ไม่ต้องเก็บปัญหาไว้คนเดียว
+
+ขอบคุณที่ยังอ่านจดหมายนี้จนถึงตรงนี้นะ เธอสำคัญกับเค้ามากจริง ๆ ♡</p>
+    <div class="signature">รักเธอเสมอ, เค้า ♡</div>
+  </section>
+
+  <div class="controls">
+    <button class="secondary" id="secretBtn">อ่านข้อความลับ 🔐</button>
+  </div>
+  <section class="panel" id="secretPanel">
+    <h2>ข้อความลับสำหรับเธอเท่านั้น ♡</h2>
+    <p>ถ้าวันไหนเธอเหนื่อย ไม่จำเป็นต้องเข้มแข็งตลอดเวลาก็ได้นะ เค้าอยากรับฟังทั้งวันที่ดีและวันที่ไม่ดีของเธอ
+
+เราไม่จำเป็นต้องสมบูรณ์แบบ แค่ค่อย ๆ เรียนรู้และดูแลกันให้ดีขึ้นก็พอแล้ว
+
+ถ้าเลือกได้อีกครั้ง เค้าก็ยังอยากมีเธออยู่ในเรื่องราวของเค้าอยู่ดี 💗</p>
+    <div class="signature">นี่เป็นความลับของเรานะ ♡</div>
+  </section>
+
+  <div class="music">
+    <strong>🎵 เพลงของเรา</strong>
+    <p>ใส่ไฟล์เพลงที่เธอมีสิทธิ์ใช้ชื่อ <b>our-song.mp3</b> ไว้ข้างไฟล์เว็บ แล้วกดเล่นตรงนี้</p>
+    <audio controls preload="none" id="song">
+      <source src="our-song.mp3" type="audio/mpeg">
+      เบราว์เซอร์นี้ไม่รองรับเครื่องเล่นเสียง
+    </audio>
+  </div>
+  <p class="hint">แก้คำว่า “เค้า” หรือข้อความต่าง ๆ ในไฟล์นี้ให้เป็นคำเรียกที่ใช้กันจริงได้เลย ♡<br>
+  หมายเหตุ: ปุ่มข้อความลับเป็นการซ่อน/แสดงข้อความ ไม่ใช่ระบบล็อกด้วยรหัสผ่าน</p>
+</main>
+<script>
+  const wrap = document.getElementById('envelopeWrap');
+  const openBtn = document.getElementById('openBtn');
+  const lovePanel = document.getElementById('lovePanel');
+  openBtn.addEventListener('click', () => {
+    const isOpen = wrap.classList.toggle('opened');
+    lovePanel.classList.toggle('show', isOpen);
+    openBtn.textContent = isOpen ? 'ปิดจดหมาย ♡' : 'กดเปิดจดหมาย 💌';
+    if (!isOpen) document.getElementById('secretPanel').classList.remove('show');
+  });
+  document.getElementById('secretBtn').addEventListener('click', () => {
+    const panel = document.getElementById('secretPanel');
+    panel.classList.toggle('show');
+    document.getElementById('secretBtn').textContent = panel.classList.contains('show') ? 'ซ่อนข้อความลับ ♡' : 'อ่านข้อความลับ 🔐';
+    if (panel.classList.contains('show')) panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+  });
+</script>
+</body>
+</html>
