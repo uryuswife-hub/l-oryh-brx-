@@ -138,28 +138,32 @@ h1,
   </div>
   </div>
 <script>
+document.addEventListener('DOMContentLoaded', function () {
   const wrap = document.getElementById('envelopeWrap');
   const openBtn = document.getElementById('openBtn');
   const lovePanel = document.getElementById('lovePanel');
   const secretBtn = document.getElementById('secretBtn');
   const secretPanel = document.getElementById('secretPanel');
 
-  openBtn.addEventListener('click', function () {
+  if (!wrap || !openBtn || !lovePanel) return;
+
+  openBtn.onclick = function () {
     const isOpen = wrap.classList.toggle('opened');
     lovePanel.classList.toggle('show', isOpen);
-    openBtn.textContent = isOpen ? 'ปิดจดหมาย ♡' : 'ദ്ദി◝ ⩊ ◜.ᐟ';
+    openBtn.textContent = isOpen
+      ? 'ปิดจดหมาย ♡'
+      : 'ദ്ദി◝ ⩊ ◜.ᐟ';
+  };
 
-    if (!isOpen) {
-      secretPanel.classList.remove('show');
-    }
-  });
-
-  secretBtn.addEventListener('click', function () {
-    const isShown = secretPanel.classList.toggle('show');
-    secretBtn.textContent = isShown
-      ? 'ซ่อนข้อความลับ ‹𝟹'
-      : 'อ่านข้อความลับ ‎𖹭';
-  });
+  if (secretBtn && secretPanel) {
+    secretBtn.onclick = function () {
+      const isShown = secretPanel.classList.toggle('show');
+      secretBtn.textContent = isShown
+        ? 'ซ่อนข้อความลับ ‹𝟹'
+        : 'อ่านข้อความลับ 𖹭';
+    };
+  }
+});
 </script>
 </body>
 </html>
